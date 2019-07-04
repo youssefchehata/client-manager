@@ -2,10 +2,14 @@ import React from 'react';
 
 import './App.css';
 
+import { AppNavBar } from './components/layout/AppNavBar';
+
+import Routes from './routes';
 function App() {
   return (
-    <div className="App bg-primary">
-     <h1 >hello</h1>
+    <div className="App ">
+      <AppNavBar />
+      <Routes />
     </div>
   );
 }
