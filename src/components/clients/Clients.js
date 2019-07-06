@@ -1,30 +1,33 @@
-
-
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
-// import Spinner from '../layout/Spinner';
+import Spinner from '../layout/Spinner';
 
 class Clients extends Component {
   state = {
     totalOwed: null
   };
+//   componentWillReceiveProps(nextProps, nextState) {
+//     const { clients }  = nextProps;
+//     if (clients) {
+//     const total = clients.reduce((total, client) => total + parseFloat(client.balance.toString()), 0);
+//     return this.setState({totalOwed: total})  ;
+//   }
+//   return null;
+// }
+
 
   static getDerivedStateFromProps(props, state) {
-    const { clients } = props;
-
+    const { clients } = props; //false if this.props
     if (clients) {
       // Add balances
-      const total = clients.reduce((total, client) => {
-        return total + parseFloat(client.balance.toString());
-      }, 0);
+      const total = clients.reduce((total, client) => total + parseFloat(client.balance.toString()), 0);
 
       return { totalOwed: total };
     }
-
     return null;
   }
 
@@ -84,7 +87,7 @@ class Clients extends Component {
         </div>
       );
     } else {
-      return' ...loading';
+      return <Spinner />;
     }
   }
 }
