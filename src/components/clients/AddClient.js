@@ -85,6 +85,7 @@ class AddClient extends Component {
                    onChange={(e)=>this.onChange(e)}
                   />
               </div>
+              <input type="submit" value="submit" className='btn btn-primary btn-block'/>
             </form>
           </div>
         </div>
