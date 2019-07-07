@@ -7,9 +7,37 @@ import { firestoreConnect } from 'react-redux-firebase';
 import Spinner from '../layout/Spinner';
 import classnames from 'classnames';
 class ClientDetails extends Component {
-  state = {};
+  state = {
+    showBalanceUpdate: false,
+    balanceUpdateAmount: ''
+  };
+  onChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  };
+  balanceSubmit = e => {
+    e.preventDefault();
+    console.log(this.state.balanceUpdateAmount);
+    const { firestore, client } = this.props;
+    const { balanceUpdateAmount } = this.state;
+    const clientUpdate = {
+      balance: parseFloat(balanceUpdateAmount)
+    };
+    //update in firestore
+    firestore.update({ collection: 'clients', doc: client.id }, clientUpdate);
+  };
+  // Delete client
+  onDeleteClick = () => {
+    const { client, firestore, history } = this.props;
+
+    firestore
+      .delete({ collection: 'clients', doc: client.id })
+      .then(history.push('/'));
+  };
   render() {
     const { client } = this.props;
+    const { showBalanceUpdate, balanceUpdateAmount } = this.state;
     if (client) {
       return (
         <div>
@@ -25,7 +53,9 @@ class ClientDetails extends Component {
                 <Link to={`/client/edit/${client.id}`} className="btn btn-dark">
                   Edit
                 </Link>
-                <button className="btn-danger">Delete</button>
+                <button onClick={this.onDeleteClick} className="btn-danger">
+                  Delete
+                </button>
               </div>
             </div>
           </div>
@@ -52,8 +82,41 @@ class ClientDetails extends Component {
                       })}
                     >
                       {parseFloat(client.balance).toFixed(2)}
-                    </span>
+                    </span>{' '}
+                    <small>
+                      {' '}
+                      <a
+                        href="#!"
+                        onClick={() =>
+                          this.setState({
+                            showBalanceUpdate: !this.state.showBalanceUpdate
+                          })
+                        }
+                      >
+                        {' '}
+                        <i className="fas fa-pencil-alt" />{' '}
+                      </a>{' '}
+                    </small>
                   </h3>
+                  {showBalanceUpdate && (
+                    <form className="form-inline" onSubmit={this.balanceSubmit}>
+                      <input
+                        type="text"
+                        name="balanceUpdateAmount"
+                        value={balanceUpdateAmount}
+                        onChange={e => this.onChange(e)}
+                        placeholder="Add New Balance"
+                        className="form-control"
+                      />
+                      <div className="input-group-append">
+                        <input
+                          type="submit"
+                          value="Update"
+                          className="btn btn-outline-dark"
+                        />
+                      </div>
+                    </form>
+                  )}
                   {/* todo balance form */}
                 </div>
               </div>
@@ -86,3 +149,4 @@ export default compose(
     client: ordered.client && ordered.client[0]
   }))
 )(ClientDetails);
+ 
