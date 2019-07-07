@@ -10,25 +10,25 @@ class Clients extends Component {
   state = {
     totalOwed: null
   };
-//   componentWillReceiveProps(nextProps, nextState) {
-//     const { clients }  = nextProps;
-//     if (clients) {
-//     const total = clients.reduce((total, client) => total + parseFloat(client.balance.toString()), 0);
-//     return this.setState({totalOwed: total})  ;
-//   }
-//   return null;
-// }
-
+  //   componentWillReceiveProps(nextProps, nextState) {
+  //     const { clients }  = nextProps;
+  //     if (clients) {
+  //     const total = clients.reduce((total, client) => total + parseFloat(client.balance.toString()), 0);
+  //     return this.setState({totalOwed: total})  ;
+  //   }
+  //   return null;
+  // }
 
   static getDerivedStateFromProps(props, state) {
     const { clients } = props; //false if this.props
     if (clients) {
-     //Add balance
-      const total = clients.reduce((total, client) => total + parseFloat(client.balance.toString()), 0);
+      //Add balance
+      const total = clients.reduce(
+        (total, client) => total + parseFloat(client.balance.toString()),
+        0
+      );
 
       return { totalOwed: total };
-      
-    
     }
     return null;
   }
