@@ -23,10 +23,12 @@ class Clients extends Component {
   static getDerivedStateFromProps(props, state) {
     const { clients } = props; //false if this.props
     if (clients) {
-      // Add balances
+     //Add balance
       const total = clients.reduce((total, client) => total + parseFloat(client.balance.toString()), 0);
 
       return { totalOwed: total };
+      
+    
     }
     return null;
   }
