@@ -29,6 +29,7 @@ class Clients extends Component {
       );
 
       return { totalOwed: total };
+      
     }
     return null;
   }
