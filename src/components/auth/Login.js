@@ -16,6 +16,14 @@ class Login extends Component {
   };
   onSubmit = e => {
     e.preventDefault();
+    const { email, password } = this.state;
+    const { firebase } = this.props;
+    firebase
+      .login({
+        email,
+        password
+      })
+      .catch(err => alert('Invalid Login Credential'));
   };
   render() {
     return (
