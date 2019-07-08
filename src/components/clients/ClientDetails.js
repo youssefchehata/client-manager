@@ -40,7 +40,7 @@ class ClientDetails extends Component {
     const { showBalanceUpdate, balanceUpdateAmount } = this.state;
     if (client) {
       return (
-        <div>
+        <div className='container'>
           <div className="row">
             <div className="col-md-6">
               <Link to="/layout/Dashboard" className="btn btn-link">
