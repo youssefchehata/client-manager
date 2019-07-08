@@ -6,10 +6,36 @@ import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import Spinner from '../layout/Spinner';
 class EditClient extends Component {
-  state = {};
+  constructor(props){
+    super(props) ;
+      this.firstNameInput = React.createRef()
+      this.lastNameInput = React.createRef()
+      this.emailInput = React.createRef()
+      this.phoneInput = React.createRef()
+      this.balanceInput = React.createRef()
+    
+  }
+  onSubmit=(e)=>{
+    e.preventDefault()
+    const {client,firestore}=this.props
+    //Update Client
+    const updClient = {
+      firstName: this.firstNameInput.current.value ,
+      lastName : this.lastNameInput.current.value ,
+      email    : this.emailInput.current.value ,
+      phone    : this.phoneInput.current.value ,
+      balance  : this.balanceInput.current.value===''?0: this.balanceInput.current.value
+    }
+    //Update client in fireStore
+    firestore.update({collection:'clients',doc:client.id},updClient)
+    .then(this.props.history.push('/'))
+
+  }
+  
+  lastNameInput
   render() {
     const { client } = this.props;
-    const { firstName, lastName, email, phone, balance } = this.state;
+    
     if (client) {
       return (
         <div className="container">
@@ -28,7 +54,8 @@ class EditClient extends Component {
                   <label htmlFor="firstName">First Name</label>
                   <input
                     type="text"
-                    defaultValue={firstName}
+                    defaultValue={client.firstName}//get input by props
+                    ref={this.firstNameInput} //for edit
                     className="form-control"
                   />
                 </div>
@@ -36,7 +63,8 @@ class EditClient extends Component {
                   <label htmlFor="lastName">Last Name</label>
                   <input
                     type="text"
-                    defaultValue={lastName}
+                    defaultValue={client.lastName}
+                    ref={this.lastNameInput}
                     className="form-control"
                   />
                 </div>
@@ -44,7 +72,8 @@ class EditClient extends Component {
                   <label htmlFor="email">Email</label>
                   <input
                     type="email"
-                    defaultValue={email}
+                    defaultValue={client.email}
+                    ref={this.emailInput}
                     className="form-control"
                   />
                 </div>
@@ -52,7 +81,8 @@ class EditClient extends Component {
                   <label htmlFor="phone">Phone</label>
                   <input
                     type="text"
-                    defaultValue={phone}
+                    defaultValue={client.phone}
+                    ref={this.phoneInput}
                     className="form-control"
                   />
                 </div>
@@ -60,7 +90,8 @@ class EditClient extends Component {
                   <label htmlFor="balance">Balance</label>
                   <input
                     type="text"
-                    defaultValue={balance}
+                    defaultValue={client.balance}
+                    ref={this.balanceInput}
                     className="form-control"
                   />
                 </div>
