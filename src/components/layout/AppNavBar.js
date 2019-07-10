@@ -4,22 +4,23 @@ import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';
+
 export class AppNavBar extends Component {
   state = {
     isAuthenticated: false
   };
 
-  componentWillReceiveProps(nextProps, nextState) {
-    const { auth } = nextProps;
-    if (auth.uid) {
-      return this.setState({ isAuthenticated: true });
-    } else {
-      return this.setState({ isAuthenticated: false });
-    }
-  }
+  // componentWillReceiveProps(nextProps, nextState) {
+  //   const { auth } = nextProps;
+  //   if (auth.uid) {
+  //     return this.setState({ isAuthenticated: true });
+  //   } else {
+  //     return this.setState({ isAuthenticated: false });
+  //   }
+  // }
 
   // static getDerivedStateFromProps(props, state) {
-  //   const { auth } = props
+  //   const { auth } = props;
 
   //   if (auth.uid) {
   //     return { isAuthenticated: true };
@@ -34,8 +35,9 @@ export class AppNavBar extends Component {
     firebase.logout();
   };
   render() {
-    const { auth } = this.props
+    
     const { isAuthenticated } = this.state;
+    const { auth } = this.props
     return (
       <div className="nav navbar navbar-expand-md navbar-dark bg-primary mb-4">
         <div className="container">
@@ -63,7 +65,7 @@ export class AppNavBar extends Component {
             {!isAuthenticated ? (
               <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
-                  <a href="#!" className="nav-link">
+                  <a href='#!'  className="nav-link" >
                     {/* {auth.email} */}
                   </a>
                 </li>
@@ -98,7 +100,7 @@ AppNavBar.propTypes = {
 export default compose(
   firebaseConnect(),
   connect((state, props) => ({
-    auth: state.firebase.auth
+    auth: state.firebase.auth,
     // settings: state.settings
   }))
 )(AppNavBar);
