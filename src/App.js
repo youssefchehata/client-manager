@@ -2,13 +2,14 @@ import React from 'react';
 
 import './App.css';
 
-import { AppNavBar } from './components/layout/AppNavBar';
+import  AppNavbar  from './components/layout/AppNavbar';
 
 import Routes from './routes';
 function App() {
   return (
     <div className="App ">
-      <AppNavBar />
+      {/* <AppNavBar /> */}
+      <AppNavbar />
       <Routes />
     </div>
   );
