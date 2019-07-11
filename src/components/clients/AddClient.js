@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-// import { compose } from 'redux';
-// import { connect } from 'react-redux'; //get some state
+import { compose } from 'redux';
+import { connect } from 'react-redux'; //get some state
 import { firestoreConnect } from 'react-redux-firebase';
 // import Clients from './Clients';
 class AddClient extends Component {
@@ -31,6 +31,8 @@ class AddClient extends Component {
   };
   render() {
     const { firstName, lastName, email, phone, balance } = this.state;
+    const {disableBalanceOnAdd}=this.props.settings
+
     return (
       <React.Fragment>
         <div className="row">
@@ -98,6 +100,7 @@ class AddClient extends Component {
                   value={balance}
                   className="form-control"
                   onChange={e => this.onChange(e)}
+                  disabled={disableBalanceOnAdd}
                 />
               </div>
               <input
@@ -112,7 +115,14 @@ class AddClient extends Component {
     );
   }
 }
-AddClient.propTypes={
-  firestore:PropTypes.object.isRequired
-}
-export default firestoreConnect()(AddClient);
+AddClient.propTypes = {
+  firestore: PropTypes.object.isRequired,
+  settings: PropTypes.object.isRequired
+
+};
+export default compose(
+  firestoreConnect(),
+  connect((state, props) => ({
+    settings: state.settings
+  }))
+)(AddClient);

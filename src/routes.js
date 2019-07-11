@@ -7,6 +7,7 @@ import EditClient from './components/clients/EditClient';
 import Login from './components/auth/Login';
 import {UserIsAuthenticated,UserIsNotAuthenticated} from './helpers/auth'
 import Settings from './components/settings/Settings';
+import Register from './components/auth/Register';
 class Routes extends Component {
   render() {
     return (
@@ -19,6 +20,7 @@ class Routes extends Component {
           <Route exact path="/client/edit/:id" component={UserIsAuthenticated(EditClient) } />
           <Route exact path="/auth/login" component={UserIsNotAuthenticated(Login)}/>
           <Route exact path="/Settings" component={UserIsAuthenticated(Settings)}/>
+          <Route exact path="/Register" component={UserIsNotAuthenticated(Register)}/>
 
         </Switch>
       </div>
